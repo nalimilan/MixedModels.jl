@@ -16,7 +16,7 @@ end
 
 function inject!{T<:Real}(d::StridedMatrix{T}, s::Diagonal{T})
     sd = s.diag
-    if length(sd) ≠ Base.LinAlg.chksquare(d)  # why does d have to be square?
+    if length(sd) ≠ chksqr(d)  # why does d have to be square?
         throw(DimensionMismatch("size(d,2) ≠ size(s,2)"))
     end
     fill!(d,zero(T))

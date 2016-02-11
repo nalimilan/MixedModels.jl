@@ -1,8 +1,8 @@
-#VERSION >= v"0.4.0-dev+6521" && __precompile__()
+# __precompile__()
 
 module MixedModels
 
-using DataArrays, DataFrames, Distributions, NLopt, Showoff, StatsBase
+using DataArrays, DataFrames, Distributions, NLopt, Showoff, StatsBase, GLM
 
 export ReMat, ScalarReMat,VectorReMat
 
@@ -14,6 +14,7 @@ export LinearMixedModel,
        BIC,        # Schwatz's Bayesian Information Criterion
        bootstrap,  # Create bootstrap replications of a model
        fixef,      # extract the fixed-effects parameter estimates
+       glmm,       # create a GeneralizedLinearMixedModel from formula, data, distribution, link
        lmm,        # create a LinearMixedModel from a formula/data specification
        lowerbd,    # lower bounds on the covariance parameters
        npar,       # total number of parameters in the model
@@ -26,6 +27,8 @@ export LinearMixedModel,
        sdest,      # the estimate of the standard deviation of the per-observation noise
        simulate!,  # simulate a new response and refit the model
        varest      # estimate of the residual variance
+
+chksqr = VERSION < v"0.5-" ? Base.LinAlg.chksquare : Base.LinAlg.checksquare
 
 abstract MixedModel <: RegressionModel # model with fixed and random effects
 
@@ -42,7 +45,7 @@ include("inject.jl")
 include("pls.jl")
 include("logdet.jl")
 include("bootstrap.jl")
-include("GLMM/glmtools.jl")
+#include("GLMM/glmtools.jl")
 include("GLMM/PIRLS.jl")
 
 end # module
